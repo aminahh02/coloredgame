@@ -25,7 +25,7 @@ scoreDisplay.innerText = score;
 
 let checkAnswer = (cardIndex) => {
     if (randomColour[cardIndex] === match.style.backgroundColor) {
-        messages.innerHTML =  "<p> Yay! you got it right!</p>";
+        messages.innerHTML =  "<h3> Yay! you got it right!</h3>";
         
         score++;
         localStorage.setItem("score", score);
@@ -36,7 +36,7 @@ let checkAnswer = (cardIndex) => {
         }, 1500)
 
     } else {
-        messages.innerHTML = "<p> Aww! Try that again!</p>"
+        messages.innerHTML = "<h3> Aww! Try that again!</h3>"
     }
 }
 

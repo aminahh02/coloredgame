@@ -30,7 +30,7 @@ body {
     margin-top: 10px;
 } */
 
-p{
+h3{
     /* border: 2px solid black; */
     margin-top: 15px;
 }
@@ -89,9 +89,23 @@ button{
         width: 250px; 
         padding: 8px;
     }
+    .header{
+        /* border: 2px solid black; */
+        width: 100%;
+    }
+    .section{
+        width: 100%;
+        /* border: 2px solid yellow; */
+    }
+    .footer{
+        width: 100%;
+        /* border: 2px solid black; */
+    }
 
     .boxes {
-        max-width: 300px;
+        /* border: 2px solid black; */
+        width: 100%;
+        /* max-width: 300px; */
         gap: 5px; 
     }
 
@@ -105,12 +119,12 @@ button{
         padding: 10px 15px;
     }
 
-    /* .title h1 {
-        font-size: 20px;
-    } */
+    .title h1 {
+        font-size: 30px;
+    } 
 
-    #message p {
-        font-size: 20x;
+    h3{
+        font-size: 50x;
     }
 
     .score {
