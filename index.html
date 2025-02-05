@@ -19,25 +19,25 @@
     </div>
 
 <div class="header">
-    <div class="title"><h2>Guess The Correct Colour!</h2></div>
-    <div id="message"><h3>You've got this!</h3></div>
+    <div class="title"><h2 data-testid="gameInstructions">Guess The Correct Colour!</h2></div>
+    <div id="message" data-testid="gameStatus"><h3>You've got this!</h3></div>
 </div>
 
 <div class="section">
-    <div class="sample" id="sample"><br><br></div>
+    <div class="sample" data-testid="colorBox" id="sample"><br><br></div>
     <div class="boxes">
-        <div class="box" onclick="checkAnswer('0')"></div>
-        <div class="box" onclick="checkAnswer('1')"></div>
-        <div class="box" onclick="checkAnswer('2')"></div>
-        <div class="box" onclick="checkAnswer('3')"></div>
-        <div class="box" onclick="checkAnswer('4')"></div>
-        <div class="box" onclick="checkAnswer('5')"></div>
+        <div class="box" data-testid="colorOption" onclick="checkAnswer('0')"></div>
+        <div class="box" data-testid="colorOption" onclick="checkAnswer('1')"></div>
+        <div class="box" data-testid="colorOption" onclick="checkAnswer('2')"></div>
+        <div class="box" data-testid="colorOption" onclick="checkAnswer('3')"></div>
+        <div class="box" data-testid="colorOption" onclick="checkAnswer('4')"></div>
+        <div class="box" data-testid="colorOption" onclick="checkAnswer('5')"></div>
     </div>
 </div>
 
 <div class="footer">
-    <div class="score">Score: <strong id="scored">0</strong></div>
-    <div class="newgame"><button id="newgames">New Game</button></div>
+    <div class="score">Score: <strong id="scored" data-testid="score">0</strong></div>
+    <div class="newgame"><button id="newgames" data-testid="newGameButton">New Game</button></div>
 </div>
 
 </div>

@@ -60,27 +60,37 @@ let checkAnswer = (cardIndex) => {
 
         if (lives === 0) {
             messages.innerHTML = "<h3> Game Over! Restarting...</h3>";
+            
+            // Resets score to 0 and update localStorage
             score = 0;
             localStorage.setItem("score", score);
-             
-        setTimeout(() => {
-            resetGameFinish();
-        }, 1500);
+            scoreDisplay.innerText = score;  // Updates the displayed score immediately
+        
+            setTimeout(() => {
+                resetGameFinish();
+            }, 1500);
         }
+        
     }
 };
 
 // New Game Button
 newGame.addEventListener("click", () => {
-    localStorage.setItem("score", 0);
-    scoreDisplay.innerText = 0;
+    // Reset the score to 0 in localStorage and display
+    score = 0;
+    localStorage.setItem("score", score);
+    scoreDisplay.innerText = score; // Update the displayed score
+
+    // Reset lives and hearts
     lives = 3;
     hearts.forEach(heart => heart.textContent = "❤️");
 
+    // Restart the game after a short delay
     setTimeout(() => {
         resetGameFinish();
     }, 500);
 });
+
 
 function resetGame() {
     randomColour = [];
