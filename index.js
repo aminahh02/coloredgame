@@ -1,70 +1,61 @@
-let messages = document.getElementById("message");
-let match = document.getElementById("sample");
-let boxes = document.querySelectorAll(".box");
-let scoreDisplay = document.getElementById("scored");
-let newGame = document.getElementById("newgames");
-
-let hearts = [
+const messages = document.getElementById("message");
+const match = document.getElementById("sample");
+const boxes = document.querySelectorAll(".box");
+const scoreDisplay = document.getElementById("scored");
+const newGame = document.getElementById("newgames");
+const highScoreDisplay = document.getElementById("highScore");
+const hearts = [
     document.getElementById("heart1"),
     document.getElementById("heart2"),
     document.getElementById("heart3")
 ];
 
-let highScoreDisplay = document.getElementById("highScore");
+const correctSound = new Audio("win.mp3");
+const wrongSound = new Audio("lose.mp3");
+const gameOverSound = new Audio("Gameover.mp3");
 
-// Audio elements for sounds
-let correctSound = new Audio("win.mp3");  // Replace with actual sound file
-let wrongSound = new Audio("lose.mp3");   
-let gameOver = new Audio("Gameover.mp3");
-
-// Game state variables
-let randomColour = [];
+let randomColours = [];
 let lives = 3;
-let score = localStorage.getItem("score") ? parseInt(localStorage.getItem("score")) : 0;
-let highScore = localStorage.getItem("highScore") ? parseInt(localStorage.getItem("highScore")) : 0;
+let score = parseInt(localStorage.getItem("score")) || 0;
+let highScore = parseInt(localStorage.getItem("highScore")) || 0;
 
-// Reset Scores on Page Load
+// Show alert and initialize the game
 window.addEventListener("DOMContentLoaded", () => {
-    alert("Welcome to the Color Guessing Game! 🎮\n\nHere's how to play:\n\nYour goal is simple – click on the box that matches the color of the display box at the top! 🎨\n\nYou have 3 lives. Make a wrong guess and you lose one heart 💔. But don't worry, keep playing to improve your score! 💪\n\nHave fun and good luck! 🍀");
+    alert("Welcome to the Color Guessing Game! 🎮\n\nClick the box that matches the displayed color! 🎨\nYou have 3 lives. Lose them all and restart! 💔\nHave fun and good luck! 🍀");
 
-    // Load the scores or reset if not available
-    score = localStorage.getItem("score") ? parseInt(localStorage.getItem("score")) : 0;
-    highScore = localStorage.getItem("highScore") ? parseInt(localStorage.getItem("highScore")) : 0;
-
+    // Display current score and high score
     scoreDisplay.innerText = score;
     highScoreDisplay.innerText = highScore;
+
+    // Start the game with a new round
+    startNewRound();
 });
 
-// Display scores
-scoreDisplay.innerText = score;
-highScoreDisplay.innerText = highScore;
-
-// Generate Random Colors
-for (let i = 0; i < 6; i++) {
-    let randomColour1 = Math.floor(Math.random() * 256);
-    let randomColour2 = Math.floor(Math.random() * 256);
-    let randomColour3 = Math.floor(Math.random() * 256);
-
-    let colourString = `rgb(${randomColour1}, ${randomColour2}, ${randomColour3})`;
-    randomColour.push(colourString);
-    boxes[i].style.backgroundColor = colourString;
+function playSound(sound) {
+    sound.currentTime = 0;
+    sound.play().catch(err => console.warn("Sound playback issue:", err));
 }
 
-// Select correct color
-let randomIndex = Math.floor(Math.random() * 6);
-match.style.backgroundColor = randomColour[randomIndex];
+// Generate random colors for the boxes
+function generateRandomColors() {
+    randomColours = Array.from({ length: 6 }, () => {
+        return `rgb(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)})`;
+    });
+    boxes.forEach((box, i) => (box.style.backgroundColor = randomColours[i]));
+}
 
-// Check Answer Function
-let checkAnswer = (cardIndex) => {
-    if (randomColour[cardIndex] === match.style.backgroundColor) {
-        messages.innerHTML = "<h3> Yay! You got it right!</h3>";
+// Start a new round by generating random colors and setting a new match
+function startNewRound() {
+    generateRandomColors();
+    match.style.backgroundColor = randomColours[Math.floor(Math.random() * 6)];
+    messages.innerHTML = "<h3>Keep going!</h3>";
+}
 
-        correctSound.currentTime = 0; // Reset sound to start
-        correctSound.play();          // Play correct sound
-
-        setTimeout(() => {
-            resetGame();
-        }, 1500);
+// Checks if the clicked color matches the displayed match color
+function checkAnswer(cardIndex) {
+    if (randomColours[cardIndex] === match.style.backgroundColor) {
+        messages.innerHTML = "<h3>Yay! You got it right!</h3>";
+        playSound(correctSound);
 
         score++;
         if (score > highScore) {
@@ -76,89 +67,43 @@ let checkAnswer = (cardIndex) => {
         localStorage.setItem("score", score);
         scoreDisplay.innerText = score;
 
+        setTimeout(startNewRound, 1200);
     } else {
-        messages.innerHTML = "<h3> Aww! Try that again!</h3>";
+        messages.innerHTML = "<h3>Aww! Try again!</h3>";
+        playSound(wrongSound);
 
-        wrongSound.currentTime = 0; // Reset sound to start
-        wrongSound.play();          // Play wrong sound
-
-        if (lives > 0) {
-            lives--;
-            hearts[lives].textContent = "🤍";
-        }
-
+        lives--;
+        hearts[lives].textContent = "🤍";
+        
         if (lives === 0) {
-            messages.innerHTML = "<h3> Game Over! Restarting...</h3>";
-
-            // Reset score and update localStorage
-            gameOver.play(); 
-            score = 0;
-            localStorage.setItem("score", score);
-            scoreDisplay.innerText = score;
-
-            setTimeout(() => {
-                resetGameFinish();
-            }, 1500);
+            messages.innerHTML = "<h3>Game Over! Restarting...</h3>";
+            playSound(gameOverSound);
+            resetGame();
         }
     }
-};
-
-// New Game Button Handler
-newGame.addEventListener("click", () => {
-    score = 0;
-    localStorage.setItem("score", score);
-    scoreDisplay.innerText = score;
-
-    lives = 3;
-    hearts.forEach(heart => heart.textContent = "❤️");
-
-    setTimeout(() => {
-        resetGameFinish();
-    }, 500);
-});
-
-// Reset Game Function
-function resetGame() {
-    randomColour = [];
-
-    for (let i = 0; i < 6; i++) {
-        let randomColour1 = Math.floor(Math.random() * 256);
-        let randomColour2 = Math.floor(Math.random() * 256);
-        let randomColour3 = Math.floor(Math.random() * 256);
-        let colourString = `rgb(${randomColour1}, ${randomColour2}, ${randomColour3})`;
-
-        randomColour.push(colourString);
-        boxes[i].style.backgroundColor = colourString;
-    }
-
-    let randomIndex = Math.floor(Math.random() * 6);
-    match.style.backgroundColor = randomColour[randomIndex];
-
-    messages.innerHTML = "<h3>Keep going!</h3>";
 }
 
-// Reset Game Fully Function
-function resetGameFinish() {
-    // Clear localStorage to reset the game
+// Event listener for the New Game button to reset the game
+newGame.addEventListener("click", resetGame);
+
+// Reset the game when it's over or manually reset
+function resetGame() {
+    score = 0;
+    lives = 3;  
+
+    hearts.forEach(heart => (heart.textContent = "❤️")); 
+    localStorage.setItem("score", score);  // Store the reset score in localStorage
+ 
+    highScoreDisplay.innerText = highScore;
+
+    scoreDisplay.innerText = score; 
+
+    setTimeout(startNewRound, 500);
+}
+
+// Refresh the page to reset both the score and high score when needed
+window.addEventListener("beforeunload", () => {
+
     localStorage.removeItem("score");
     localStorage.removeItem("highScore");
-
-    lives = 3;
-    hearts.forEach(heart => heart.textContent = "❤️");
-
-    randomColour = [];
-    for (let i = 0; i < 6; i++) {
-        let randomColour1 = Math.floor(Math.random() * 256);
-        let randomColour2 = Math.floor(Math.random() * 256);
-        let randomColour3 = Math.floor(Math.random() * 256);
-        let colourString = `rgb(${randomColour1}, ${randomColour2}, ${randomColour3})`;
-
-        randomColour.push(colourString);
-        boxes[i].style.backgroundColor = colourString;
-    }
-
-    let randomIndex = Math.floor(Math.random() * 6);
-    match.style.backgroundColor = randomColour[randomIndex];
-
-    messages.innerHTML = "<h3>New Game Started!</h3>";
-}
+});
