@@ -34,6 +34,11 @@ match.style.backgroundColor = randomColour[randomIndex];
 let checkAnswer = (cardIndex) => {
     if (randomColour[cardIndex] === match.style.backgroundColor) {
         messages.innerHTML = "<h3> Yay! you got it right!</h3>";
+        
+        setTimeout(() => {
+            resetGame();
+        }, 1500);
+
 
         score++;
         if (score > highScore) {
@@ -44,10 +49,6 @@ let checkAnswer = (cardIndex) => {
 
         localStorage.setItem("score", score);
         scoreDisplay.innerText = score;
-
-        setTimeout(() => {
-            window.location.reload();
-        }, 1500);
 
     } else {
         messages.innerHTML = "<h3> Aww! Try that again!</h3>";
@@ -61,12 +62,10 @@ let checkAnswer = (cardIndex) => {
             messages.innerHTML = "<h3> Game Over! Restarting...</h3>";
             score = 0;
             localStorage.setItem("score", score);
-            setTimeout(() => {
-                localStorage.setItem("score", 0);
-                lives = 3;
-                hearts.forEach(heart => heart.textContent = "❤️");
-                window.location.reload();
-            }, 1500);
+             
+        setTimeout(() => {
+            resetGameFinish();
+        }, 1500);
         }
     }
 };
@@ -79,8 +78,44 @@ newGame.addEventListener("click", () => {
     hearts.forEach(heart => heart.textContent = "❤️");
 
     setTimeout(() => {
-        window.location.reload();
+        resetGameFinish();
     }, 500);
 });
 
+function resetGame() {
+    randomColour = [];
+    for (let i = 0; i < 6; i++) {
+        let randomColour1 = Math.floor(Math.random() * 256);
+        let randomColour2 = Math.floor(Math.random() * 256);
+        let randomColour3 = Math.floor(Math.random() * 256);
+        let colourString = `rgb(${randomColour1}, ${randomColour2}, ${randomColour3})`;
+        randomColour.push(colourString);
+        boxes[i].style.backgroundColor = colourString;
+    }
+
+    let randomIndex = Math.floor(Math.random() * 6);
+    match.style.backgroundColor = randomColour[randomIndex];
+
+    messages.innerHTML = "<h3>Start guessing the color!</h3>";
+}
+
+function resetGameFinish() {
+    lives = 3;
+    hearts.forEach(heart => heart.textContent = "❤️");
+
+    randomColour = [];
+    for (let i = 0; i < 6; i++) {
+        let randomColour1 = Math.floor(Math.random() * 256);
+        let randomColour2 = Math.floor(Math.random() * 256);
+        let randomColour3 = Math.floor(Math.random() * 256);
+        let colourString = `rgb(${randomColour1}, ${randomColour2}, ${randomColour3})`;
+        randomColour.push(colourString);
+        boxes[i].style.backgroundColor = colourString;
+    }
+
+    let randomIndex = Math.floor(Math.random() * 6);
+    match.style.backgroundColor = randomColour[randomIndex];
+
+    messages.innerHTML = "<h3>Start guessing the color!</h3>";
+}
 

@@ -127,12 +127,24 @@ button:active {
     }
 
     .sample {
-        width: 250px; 
+        width: 200px; 
         padding: 8px;
     }
     .header{
-        /* border: 2px solid black; */
         width: 100%;
+    }
+    .heart {
+        font-size: small;
+        margin: 0 3px;
+    }
+    /* .top-bar, .high-score{
+        border: 2px solid red;
+    } */
+     
+    .lives {
+        display: flex;
+        font-size: 14px;
+        /* border: 2px solid white; */
     }
     .section{
         width: 100%;
@@ -161,14 +173,14 @@ button:active {
     }
 
     .title h1 {
-        font-size: 30px;
+        font-size: small;
     } 
 
     h3{
-        font-size: 50x;
+        font-size: small;
     }
 
     .score {
-        font-size: 20px;
+        font-size: small;
     }
 }
