@@ -14,7 +14,8 @@ let highScoreDisplay = document.getElementById("highScore");
 
 // Audio elements for sounds
 let correctSound = new Audio("win.mp3");  // Replace with actual sound file
-let wrongSound = new Audio("lose.mp3");      // Replace with actual sound file
+let wrongSound = new Audio("lose.mp3");   
+let gameOver = new Audio("Gameover.mp3");
 
 // Game state variables
 let randomColour = [];
@@ -90,6 +91,7 @@ let checkAnswer = (cardIndex) => {
             messages.innerHTML = "<h3> Game Over! Restarting...</h3>";
 
             // Reset score and update localStorage
+            gameOver.play(); 
             score = 0;
             localStorage.setItem("score", score);
             scoreDisplay.innerText = score;
