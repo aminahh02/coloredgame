@@ -80,8 +80,8 @@ button{
 
 @media screen and (max-width: 480px) {
     .container {
-        width: 95%; 
-        max-width: 350px; 
+        width: 100%; 
+        height: 100vh;
         padding: 15px; 
     }
 
@@ -96,8 +96,8 @@ button{
     }
 
     .box {
-        width: 80px;
-        height: 80px;
+        width: 90px;
+        height: 90px;
         border-radius: 10px;
     }
 
@@ -105,15 +105,15 @@ button{
         padding: 10px 15px;
     }
 
-    .title h1 {
+    /* .title h1 {
         font-size: 20px;
-    }
+    } */
 
     #message p {
-        font-size: 14px;
+        font-size: 20x;
     }
 
     .score {
-        font-size: 16px;
+        font-size: 20px;
     }
 }
