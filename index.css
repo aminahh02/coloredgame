@@ -8,11 +8,11 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    min-height: 100vh; /* Ensures full height */
+    width: 100vw;
 }
 
 .container{
-    /* border: 5px solid red; */
     border-radius: 20px;
     display: flex;
     flex-direction: column;
@@ -20,6 +20,9 @@ body {
     align-items: center;
     text-align: center;
     row-gap: 18px;
+    width: 90%; /* Makes sure it doesn’t shrink too much */
+    max-width: 500px; /* Keeps it at a reasonable size */
+    padding: 20px;
 }
 
 /* .header{
@@ -46,7 +49,6 @@ p{
     width: 300px;
     border-radius: 10px;
     padding: 10px;
-
 }
 
 .boxes{
@@ -54,7 +56,8 @@ p{
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
-    width: 400px;
+    width: 100%;
+    max-width: 400px;
 }
 
 .box{
@@ -72,4 +75,45 @@ button{
     padding: 12px 20px;
     border-radius: 10px;
     margin: 10px;
+    cursor: pointer;
+}
+
+@media screen and (max-width: 480px) {
+    .container {
+        width: 95%; 
+        max-width: 350px; 
+        padding: 15px; 
+    }
+
+    .sample {
+        width: 250px; 
+        padding: 8px;
+    }
+
+    .boxes {
+        max-width: 300px;
+        gap: 5px; 
+    }
+
+    .box {
+        width: 80px;
+        height: 80px;
+        border-radius: 10px;
+    }
+
+    button {
+        padding: 10px 15px;
+    }
+
+    .title h1 {
+        font-size: 20px;
+    }
+
+    #message p {
+        font-size: 14px;
+    }
+
+    .score {
+        font-size: 16px;
+    }
 }
