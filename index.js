@@ -48,7 +48,7 @@ function generateRandomColors() {
 function startNewRound() {
     generateRandomColors();
     match.style.backgroundColor = randomColours[Math.floor(Math.random() * 6)];
-    messages.innerHTML = "<h3>Keep going!</h3>";
+    messages.innerHTML = "<h3>GO!</h3>";
 }
 
 // Checks if the clicked color matches the displayed match color
