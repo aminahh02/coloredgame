@@ -1,4 +1,3 @@
-
 let messages = document.getElementById("message");
 let match = document.getElementById("sample");
 let boxes = document.querySelectorAll(".box");
@@ -26,11 +25,13 @@ let highScore = localStorage.getItem("highScore") ? parseInt(localStorage.getIte
 // Reset Scores on Page Load
 window.addEventListener("DOMContentLoaded", () => {
     alert("Welcome to the Color Guessing Game! 🎮\n\nHere's how to play:\n\nYour goal is simple – click on the box that matches the color of the display box at the top! 🎨\n\nYou have 3 lives. Make a wrong guess and you lose one heart 💔. But don't worry, keep playing to improve your score! 💪\n\nHave fun and good luck! 🍀");
-});
 
-window.addEventListener("beforeunload", () => {
-    localStorage.removeItem("highScore");
-    localStorage.removeItem("score");
+    // Load the scores or reset if not available
+    score = localStorage.getItem("score") ? parseInt(localStorage.getItem("score")) : 0;
+    highScore = localStorage.getItem("highScore") ? parseInt(localStorage.getItem("highScore")) : 0;
+
+    scoreDisplay.innerText = score;
+    highScoreDisplay.innerText = highScore;
 });
 
 // Display scores
@@ -136,11 +137,14 @@ function resetGame() {
 
 // Reset Game Fully Function
 function resetGameFinish() {
+    // Clear localStorage to reset the game
+    localStorage.removeItem("score");
+    localStorage.removeItem("highScore");
+
     lives = 3;
     hearts.forEach(heart => heart.textContent = "❤️");
 
     randomColour = [];
-
     for (let i = 0; i < 6; i++) {
         let randomColour1 = Math.floor(Math.random() * 256);
         let randomColour2 = Math.floor(Math.random() * 256);
@@ -154,8 +158,5 @@ function resetGameFinish() {
     let randomIndex = Math.floor(Math.random() * 6);
     match.style.backgroundColor = randomColour[randomIndex];
 
-    messages.innerHTML = "<h3></h3>";
+    messages.innerHTML = "<h3>New Game Started!</h3>";
 }
-
-
-
